@@ -11,7 +11,7 @@
 } 
 
 page{
-  background-color:#eeeff1; 
+  background-color:#fff; 
   width: 100%;
   color: #2d2e33;
    font-family: 'Arial','Microsoft Yahei', "Helvetica Neue", Helvetica, Tahoma, sans-serif; 

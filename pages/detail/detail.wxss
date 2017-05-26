@@ -165,7 +165,11 @@ swiper {
   width: 36rpx;
   height: 28rpx;
 }
-
+ .model-left .m-img7{
+  width: 40rpx;
+  height: 38rpx;
+  margin-left:7rpx;
+}
 .arr{
   margin-right: 30rpx;
 }
@@ -319,7 +323,6 @@ top:10rpx;
   width: 80rpx;
   margin: 30rpx 0;
   padding: 0 18rpx;
-  border-right: solid 1px  #cac9c9;
   position: relative;
   }
   .comment2 .comment_num{

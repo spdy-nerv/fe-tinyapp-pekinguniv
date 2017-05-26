@@ -1,13 +1,13 @@
 {
-  "pages":[
+  "pages": [
     "pages/timeLine/timeLine",
-    "pages/eventPoster/eventPoster",     
-    
-    "pages/eventPublish/eventPublish",  
+    "pages/eventPoster/eventPoster",
+    "pages/eventPublish/eventPublish",
     "pages/modifyCode/modifyCode",
-    "pages/descriptionModuleAdd/descriptionModuleAdd",
+     
+ 		"pages/descriptionModuleAdd/descriptionModuleAdd",
     "pages/voteModuleAdd/voteModuleAdd",
-    "pages/testModuleAdd/testModuleAdd", 
+    "pages/testModuleAdd/testModuleAdd",
     "pages/enrollModuleAdd/enrollModuleAdd",
     "pages/hobbiesLable/hobbiesLable",
     "pages/map/map",
@@ -15,17 +15,21 @@
     "pages/myCard/myCard",
     "pages/declaration/declaration",
     "pages/verify/verify",
-	"pages/detail/detail",
+    "pages/detail/detail",
     "pages/logs/logs",
     "pages/commentSubmit/commentSubmit",
     "pages/voteModule/voteModule",
     "pages/testModule/testModule",
     "pages/myFollows/myFollows",
-    "pages/myPublished/myPublished"
+    "pages/myPublished/myPublished",
+    "pages/unitDetail/unitDetail",
+    "pages/publicDetail/publicDetail",
+    "pages/companyList/companyList",
+    "pages/companyDetail/companyDetail"
   ],
-  "window":{
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#eeeff1",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   }
 }

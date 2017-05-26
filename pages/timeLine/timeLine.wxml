@@ -6,12 +6,38 @@
           <text class="picker-text">{{year}}年{{month}}月</text><view class="picker-icon"></view>
         </view>
     </picker>
-    <view class="filter-title">{{formatedMonth}}</view>
+    <view class="filter-title">公告板</view>
     <view class="filter-more">
       <view class="filter-more-btn" bindtap="onTapFilterMore"></view>
     </view>
   </view>
-<scroll-view scroll-x="true" scroll-left="{{scrollLeft}}" scroll-with-animation="true" style="width: 100%" class="horizontal-cal clearfix" style="display:{{isShowSimpleCal}}">
+  <view class="btns">
+  <view class="lin"><text id="public" data-id="0"  class="{{section[0]?'active':''}}" bindtap="changeL">公告列表</text></view>
+  <view><text  id="activity" data-id="1" class="{{section[1]?'active':''}}" bindtap="changeL">活动列表</text></view>
+  </view>
+<view class="contain contain1" wx:if="{{section[0]}}">
+ <scroll-view scroll-y="true"   scroll-with-animation="true" style="width: 100%" class="" >
+ <view id="listWrapper1">
+  <block wx:for="{{events1}}" wx:key="unique">
+     <navigator url="../publicDetail/publicDetail?eventId={{item.eventId}}">
+    <view class="events-list-container events-list-container1">
+         <view class="events-tit fontNor">{{item.name}}</view>
+        <view class="events-add timer">
+        <text wx:if="{{item.isTop==1}}" class="decorate">置顶</text>
+          <text wx:if="{{item.eventType=='招聘'}}" class="decorate blue">招聘</text>
+            <text wx:if="{{item.eventType=='实习'}}" class="decorate green">实习</text>
+        时间：{{item.createTime}}</view>
+</view>    
+     </navigator>
+  </block>
+
+</view>
+
+</scroll-view> 
+</view>
+
+ <view  wx:if="{{section[1]}}"  class="contain" >
+ <scroll-view scroll-x="true" scroll-left="{{scrollLeft}}" scroll-with-animation="true" style="width: 100%" class="horizontal-cal clearfix" style="display:{{isShowSimpleCal}}">
     <view wx:for="{{calendar}}" wx:key="unique" class="item" data-offset-left="{{item.offsetLeft}}">
       <view class="item-title">{{item.daySimpleName}}</view>
       <view class="item-value">
@@ -53,7 +79,7 @@
       <view class="events-list-title">{{item.month}}月{{item.date}}日，{{item.dayName}}</view>
       <view class="anchor" id="anchor{{item.date}}"></view>
     </view>
-    <navigator url="../detail/detail?eventId={{item.eventId}}">
+    <navigator url="../detail/detail?eventId={{item.eventId}}&fromShare={{fromShare}}">
     <view class="events-list-container">
       <text wx:if="{{item.date == todayDate && item.isFirstEventInDay}}" class="tody">今天</text>
       <view class="events-list-left">{{item.startTime}}</view>
@@ -63,8 +89,8 @@
         <view class="events-member">
         <view class="img-box">
           <view wx:for="{{item.followInfo.avatars}}" wx:key="unique" wx:for-item="a" class="img" style="z-index:99;"><image src="{{a}}"></image></view>
-        </view>
-        <text class="events-member-num">{{item.followInfo.total}}人关注</text>
+         </view>
+          <text class="events-member-num">{{item.followInfo.total}}人关注</text>
         </view>
       </view> 
     </view>
@@ -74,6 +100,8 @@
 </view>
 
 </scroll-view> 
+
+ </view> 
 
 </view>
 

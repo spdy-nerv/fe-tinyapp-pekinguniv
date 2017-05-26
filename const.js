@@ -23,9 +23,10 @@ var dayFormatList = [
   { chi: '星期六', eng: 'Saturday', simpleEng: 'Sat' }
 ];
 
-var reqHost = 'https://www.leiy.club';
+var reqHost = 'https://www.leiy.club/peking';
 
 var APIS = {
+  GET_EVENT_NOU:						 reqHost +'/getAnnouncementList',//公告数据
   GET_ROLE_LIST: 						reqHost + '/getRoleList',
   GET_EVENT_TYPE_LIST: 			reqHost + '/getEventTypeList',
   LOGIN: 										reqHost + '/wx/login',
@@ -91,7 +92,13 @@ var APIS = {
   REMOVE_MODULE: reqHost + '/removeModule',
 
   // 获取事件首页图片
-  GET_EVENT_POSTER: reqHost + '/getEventPoster'
+  GET_EVENT_POSTER: reqHost + '/getEventPoster',
+  //公司列表
+  
+  GET_COMPANY_LIST:reqHost + '/getCompanyList',
+   
+  //公司详情
+  GET_COMPANY_DETAILS:reqHost + '/getCompanyDetails'
 	
 };
 

@@ -83,7 +83,7 @@ page{
 
 .horizontal-cal {
   position: fixed;
-  top: 50rpx;
+ top: 148rpx;
   background-color:#eeeff1;
   z-index: 9999;
   width: 750rpx;
@@ -375,4 +375,30 @@ page{
   background-repeat: no-repeat;
   float: right; 
 }
+.btns{
+  width: 100%;
+  border-top:1rpx solid #dbdbdb;
+  border-bottom:1rpx solid #dbdbdb;
+  display: flex;
+   flex-direction: row;
+   align-items: center;
+   background:#ffffff;
+}
+
+.btns view{flex: 1;
+text-align: center;position: relative}
+.btns view text{border-bottom: 4rpx solid #fff;line-height:84rpx;font-size: 36rpx;display: inline-block;height: 84rpx}
+.btns view .active{border-bottom: 4rpx solid #cc2829;color:#cc2829}
+.btns .lin::after{content: "";height: 30rpx;width: 3rpx;background:#dbdbdb;position: absolute;top: 28rpx;right: 0;display: block }
+.contain{flex:1;
+overflow: auto;}
+.contain1{margin-bottom: 100rpx;}
+.events-list-container1{flex-direction: column;padding: 40rpx 20rpx;min-height: auto;box-sizing: border-box}
+.events-add{display: flex;flex-direction: row;}
+.decorate{padding: 0rpx 7rpx;border:1px solid #f85959;line-height: 28rpx;height: 26rpx;margin-right: 22rpx;margin-top: 10rpx;
+color: #f85959;border-radius: 6rpx;font-size: 22rpx;}
+.blue{color:#2f78d3;border-color: #2f78d3; }
+.green{color:#40c15a;border-color: #40c15a; }
+.fontNor{font-weight: normal;color: #1a1a1a;margin-bottom: 15rpx;}
+.timer{color: #999}
 

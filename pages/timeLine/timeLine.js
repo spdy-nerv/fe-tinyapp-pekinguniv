@@ -17,11 +17,14 @@ Page({
     year: 0,
     month: 0,
     formatedMonth: '',
+    fromShare: 0,
     date: 0,
     todayDate: 0,
     events: [],
+    events1: [],
     eventDays: [],
     isShowSimpleCal: 'none',
+    section:[true,false],
     onBindScroll: '',
     toggleCalBundary: 0,
     calendar: [],
@@ -33,38 +36,41 @@ Page({
     filterPanelAnim: {},
     filterMaskDisplay: 'none',
     eventTypeList: [
-      {typeId: '', typeName: '全部'}
+      { typeId: '', typeName: '全部' }
     ],
     eventTypeIndex: 0,
     publisherTypeList: [
-      {roleId: '', roleName: '全部'}
+      { roleId: '', roleName: '全部' }
     ],
     publisherTypeIndex: 0,
     listPaddingBottom: 100
   },
   //事件处理函数
-  bindViewTap: function() {
+  bindViewTap: function () {
     wx.navigateTo({
       url: '../logs/logs'
     })
   },
 
-  onLoad: function () {
+  onLoad: function (options) {
     wx.showLoading({
       mask: true,
       title: '数据加载中'
     });
-
+    this.setData({
+       fromShare: options.fromShare || 0,
+      
+    });
     // 处理兼容性
     var sysInfo = wx.getSystemInfoSync();
     if (sysInfo.system.toUpperCase().indexOf('IOS') != -1) {
       this.setData({
         listPaddingBottom: 150
       });
-    }    
+    }
   },
 
-  onShow: function() {
+  onShow: function () {
     user.login(this.renderUI, this, true);
   },
 
@@ -73,12 +79,55 @@ Page({
       screenWidth: wx.getSystemInfoSync().screenWidth
     });
     this.getCurrentDate();
+    this.getEventList1();
     this.getEventList();
     this.getFilterTypes();
     this.createAnim();
   },
-
-  getEventList: function() {
+  getEventList1: function () {
+    var that = this;
+    var et = this.data.eventTypeList;
+    var ei = this.data.eventTypeIndex;
+    var pt = this.data.publisherTypeList;
+    var pi = this.data.publisherTypeIndex;
+     request({
+       url: APIS.GET_EVENT_NOU,
+      data: {
+         offset: 0,
+        size: 9999,
+        year: this.data.year,
+        month: this.data.month,
+        eventType: et[ei].typeId,
+        publisherType: pt[pi].roleId,
+         sid: wx.getStorageSync('sid')
+      },
+      method: 'POST',
+      realSuccess: function (data) {
+        var list1= data.list;
+        console.log(list1)
+         that.setData({
+          events1: list1,
+         });
+       
+        wx.hideLoading();
+        if (list1.length == 0) {
+          wx.showToast({
+            title: '当前月份没有公告！'
+          });
+        }
+        
+      },
+      loginCallback: this.getEventList1,
+      realFail: function (msg) {
+        wx.hideLoading();
+        wx.showToast({
+          title: msg
+        });
+      }
+    }, true, this);
+   
+  },
+  getEventList: function () {
     var that = this;
     var et = this.data.eventTypeList;
     var ei = this.data.eventTypeIndex;
@@ -96,11 +145,11 @@ Page({
         sid: wx.getStorageSync('sid')
       },
       method: 'POST',
-      realSuccess: function(data){
+      realSuccess: function (data) {
         var list = data.list;
-        list = list.map(function(e, i) {
+        list = list.map(function (e, i) {
           e.dayName = dayFormatList[e.day].chi;
-          if (i == 0 || e.date != list[i-1].date) {
+          if (i == 0 || e.date != list[i - 1].date) {
             e.isFirstEventInDay = true;
           }
           return e;
@@ -112,65 +161,65 @@ Page({
         wx.hideLoading();
         if (list.length == 0) {
           wx.showToast({
-            title: '当前月份没有事件！'
+            title: '当前月份没有活动事件！'
           });
         }
-        that.renderCalendar();
+         that.renderCalendar();
       },
       loginCallback: this.getEventList,
-      realFail: function(msg) {
+      realFail: function (msg) {
         wx.hideLoading();
         wx.showToast({
           title: msg
         });
       }
     }, true, this);
-/*
-    var events = require('../../mocks/getEventList');
-    var list = events.list;
-    setTimeout(function() {
-      list = list.map(function(e, i) {
-        e.dayName = dayFormatList[e.day].chi;
-        if (i == 0 || e.date != list[i-1].date) {
-          e.isFirstEventInDay = true;
-        }
-        return e;
-      });
-      that.setData({
-        events: list,
-        eventDays: events.eventDays
-      });
-      wx.hideLoading();
-      that.renderCalendar();
-    }, 1000);
-    */
+    /*
+        var events = require('../../mocks/getEventList');
+        var list = events.list;
+        setTimeout(function() {
+          list = list.map(function(e, i) {
+            e.dayName = dayFormatList[e.day].chi;
+            if (i == 0 || e.date != list[i-1].date) {
+              e.isFirstEventInDay = true;
+            }
+            return e;
+          });
+          that.setData({
+            events: list,
+            eventDays: events.eventDays
+          });
+          wx.hideLoading();
+          that.renderCalendar();
+        }, 1000);
+        */
   },
 
-  getFilterTypes: function() {
+  getFilterTypes: function () {
     var that = this;
     request({
       url: APIS.GET_EVENT_TYPE_LIST,
-      method: 'GET', 
-      realSuccess: function(data){
+      method: 'GET',
+      realSuccess: function (data) {
         var list = data.list;
         that.setData({
-          eventTypeList: [{typeId: '', typeName: '全部'}].concat(list)
+          eventTypeList: [{ typeId: '', typeName: '全部' }].concat(list)
         });
       }
     }, false);
     request({
       url: APIS.GET_ROLE_LIST,
-      method: 'GET', 
-      realSuccess: function(data){
+      method: 'GET',
+      realSuccess: function (data) {
         var list = data.list;
         that.setData({
-          publisherTypeList: [{roleId: '', roleName: '全部'}].concat(list)
+          publisherTypeList: [{ roleId: '', roleName: '全部' }].concat(list)
         });
       }
     }, false);
   },
 
-  getCurrentDate: function() {
+  getCurrentDate: function () {
     var today = new Date();
     this.setData({
       year: today.getFullYear(),
@@ -181,7 +230,7 @@ Page({
     });
   },
 
-  renderCalendar: function() {
+  renderCalendar: function () {
     var cal = util.getCalByDate(
       this.data.year,
       this.data.month,
@@ -191,11 +240,11 @@ Page({
     var that = this;
     var currentOffset = 0;
     cal[cal.length - 14].initPos = 'initPos';
-    cal = cal.map(function(d, i) {
+    cal = cal.map(function (d, i) {
       d.offsetLeft = that.data.screenWidth / 7 * i;
       if (d.mode == 'current' && d.date == that.data.date) {
         // 当前周的第一天滚动到最左边
-        currentOffset = cal[i - ( i % 7 )].offsetLeft;
+        currentOffset = cal[i - (i % 7)].offsetLeft;
       }
       // 判断该日期下是否有事件
       if (d.mode == 'current') {
@@ -211,14 +260,14 @@ Page({
       //isShowSimpleCal: 'block',
       verticalScrollAnim: false
     });
-    setTimeout(function() {
+    setTimeout(function () {
       that.setData({
         //scrollLeft: currentOffset,
         scrollIntoViewId: 'initPos',
         onBindScroll: 'onInitScroll'
       });
     }, 0);
-    setTimeout(function() {
+    setTimeout(function () {
       that.setData({
         scrollLeft: currentOffset
       });
@@ -227,22 +276,23 @@ Page({
   },
 
   // 通过这里获取垂直scroll的初始偏移量，用于后续水平scroll的显示toggle处理
-  onInitScroll: function(e) {
+  onInitScroll: function (e) {
     var that = this;
+    console.log(e.detail.scrollTop)
     this.setData({
       toggleCalBundary: e.detail.scrollTop,
       onBindScroll: 'onBindScroll',
       verticalScrollAnim: true,
       isShowSimpleCal: 'block'
     });
-    setTimeout(function() {
+    setTimeout(function () {
       that.setData({
         scrollIntoViewId: 'anchor' + that.data.date
       });
     }, 0);
   },
 
-  onBindScroll: function(e) {
+  onBindScroll: function (e) {
     if (e.detail.scrollTop < this.data.toggleCalBundary) {
       this.setData({
         isShowSimpleCal: 'none'
@@ -254,28 +304,29 @@ Page({
     }
   },
 
-  onHitTop: function() {
+  onHitTop: function () {
     this.setData({
-        isShowSimpleCal: 'none'
-      });
+      isShowSimpleCal: 'none'
+    });
   },
 
   // 通过日期选择器修改日期
-  bindDateChange: function(e) {
+  bindDateChange: function (e) {
     var dateArr = e.detail.value.split('-');
     this.setData({
       year: +dateArr[0],
       month: +dateArr[1],
       date: +dateArr[2],
-      formatedMonth: monthFormatList[+dateArr[1]-1].arabic + '月'
+      formatedMonth: monthFormatList[+dateArr[1] - 1].arabic + '月'
     });
-    
-    this.getEventList();
+
+    this.getEventList(); 
+    this.getEventList1();
     //this.renderCalendar();
   },
 
   // 点击日历修改日期
-  onSelectDate: function(e) {
+  onSelectDate: function (e) {
     var date = e.target.dataset.date;
     if (!util.inArray(date, this.data.eventDays)) {
       wx.showToast({
@@ -284,9 +335,9 @@ Page({
     } else {
       var offset = 0;
       var that = this;
-      this.data.calendar.forEach(function(d, i) {
+      this.data.calendar.forEach(function (d, i) {
         if (d.mode == 'current' && d.date == date) {
-          offset = that.data.calendar[i - ( i % 7 )].offsetLeft;
+          offset = that.data.calendar[i - (i % 7)].offsetLeft;
           return false;
         }
       });
@@ -295,7 +346,7 @@ Page({
         scrollIntoViewId: 'anchor' + date,
         date: date
       });
-      setTimeout(function() {
+      setTimeout(function () {
         that.setData({
           scrollLeft: offset
         });
@@ -303,7 +354,7 @@ Page({
     }
   },
 
-  createAnim: function() {
+  createAnim: function () {
     var that = this;
     this.filterMaskAnim = wx.createAnimation({
       duration: 400,
@@ -316,7 +367,7 @@ Page({
   },
 
   // 点击更多筛选条件
-  onTapFilterMore: function() {
+  onTapFilterMore: function () {
     this.setData({
       filterMaskDisplay: 'block'
     });
@@ -329,7 +380,7 @@ Page({
   },
 
   // 关闭更多筛选面板
-  onCloseFilterPanel: function() {
+  onCloseFilterPanel: function () {
     var that = this;
     this.filterMaskAnim.opacity(0).step();
     this.filterPanelAnim.right('-80%').step();
@@ -337,42 +388,64 @@ Page({
       filterMaskAnim: this.filterMaskAnim.export(),
       filterPanelAnim: this.filterPanelAnim.export()
     });
-    setTimeout(function() {
+    setTimeout(function () {
       that.setData({
         filterMaskDisplay: 'none'
       });
     }, 400);
   },
 
-  onChangeEventType: function(e) {
+  onChangeEventType: function (e) {
     this.setData({
       eventTypeIndex: +e.detail.value
     });
   },
 
-  onChangePublisherType: function(e) {
+  onChangePublisherType: function (e) {
     this.setData({
       publisherTypeIndex: +e.detail.value
     });
   },
 
-  onSubmitFilterMore: function() {
+  onSubmitFilterMore: function () {
+    this.getEventList1();
     this.getEventList();
     this.onCloseFilterPanel();
   },
 
-  onResetFilterMore: function() {
+  onResetFilterMore: function () {
     this.setData({
       eventTypeIndex: 0,
       publisherTypeIndex: 0
     });
   },
-
-  onShareAppMessage: function() {
-		// 用户点击右上角分享
-		return {
-			desc: '分享给大家看看吧', // 分享描述
-			path: '/pages/timeLine/timeLine'
-		}
-	},
+  changeL:function(e){
+    var index=e.currentTarget.dataset.id;
+   let newSelects = [];
+   for (let i = 0, j = this.data.section.length; i < j; i++) {
+     let flag = false;
+     if (i == index) flag = true;
+     newSelects.push(flag);
+   }
+   this.setData({
+     section: newSelects,
+    });
+   if (index == 0 && this.data.events1.length==0){
+     wx.showToast({
+       title: '当前月份没有公告！'
+     });
+   } else if (index == 1 && this.data.events.length == 0){
+     wx.showToast({
+       title: '当前月份没有活动事件！'
+     });
+   }
+ 
+  },
+  onShareAppMessage: function () {
+    // 用户点击右上角分享
+    return {
+      desc: '分享给大家看看吧', // 分享描述
+      path: '/pages/timeLine/timeLine'
+    }
+  },
 })
