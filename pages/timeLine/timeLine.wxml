@@ -12,12 +12,12 @@
     </view>
   </view>
   <view class="btns">
-  <view class="lin"><text id="public" data-id="0"  class="{{section[0]?'active':''}}" bindtap="changeL">公告列表</text></view>
-  <view><text  id="activity" data-id="1" class="{{section[1]?'active':''}}" bindtap="changeL">活动列表</text></view>
+  	<view class="lin"><text id="public" data-id="0"  class="{{section[0]?'active':''}}" bindtap="changeL">公告列表</text></view>
+  	<view><text  id="activity" data-id="1" class="{{section[1]?'active':''}}" bindtap="changeL">活动列表</text></view>
   </view>
-<view class="contain contain1" wx:if="{{section[0]}}">
- <!--<scroll-view scroll-y="true"   scroll-with-animation="true" style="width: 100%" class="" >-->
- <scroll-view scroll-y="true"   scroll-with-animation="true" id="listWrapper1" class="list-wrapper-1">
+
+<view class="contain1" wx:if="{{section[0]}}">
+ <scroll-view scroll-y="true" class="list-wrapper-1" id="listWrapper1" style="padding-bottom:{{listPaddingBottom}}rpx">
   <block wx:for="{{events1}}" wx:key="unique">
      <navigator url="../publicDetail/publicDetail?eventId={{item.eventId}}">
     <view class="events-list-container events-list-container1">
@@ -32,8 +32,6 @@
   </block>
 
 </scroll-view>
-
-<!--</scroll-view> -->
 </view>
 
  <view  wx:if="{{section[1]}}"  class="contain" >

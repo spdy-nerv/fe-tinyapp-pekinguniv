@@ -323,7 +323,6 @@ top:10rpx;
   width: 80rpx;
   margin: 30rpx 0;
   padding: 0 18rpx;
-  border-right: solid 1px  #cac9c9;
   position: relative;
   }
   .comment2 .comment_num{
