@@ -67,8 +67,17 @@ var { request } = require('../../libs/request');
                method: 'POST',
                success: function (res) {
                  console.log("详情！", res);
+                
+                 var d = res.data.resultData.data;
+                 var paragraphs = d.paragraphs.map(function(p) {
+                   p.value = p.value.replace(/\n(\n|\t|\u00A0)*\t/mg, '\n\t\n\t');
+                   return p;
+                 });
+
                  that.setData({
-                   "datas": res.data.resultData.data
+                   "datas": {
+                     paragraphs: paragraphs
+                   }
                  });
                 
                }
