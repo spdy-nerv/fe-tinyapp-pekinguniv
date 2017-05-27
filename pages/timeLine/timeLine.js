@@ -65,7 +65,7 @@ Page({
     var sysInfo = wx.getSystemInfoSync();
     if (sysInfo.system.toUpperCase().indexOf('IOS') != -1) {
       this.setData({
-        listPaddingBottom: 150
+        listPaddingBottom: 250
       });
     }
   },
