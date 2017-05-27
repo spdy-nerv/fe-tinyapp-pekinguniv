@@ -17,7 +17,7 @@
   </view>
 <view class="contain contain1" wx:if="{{section[0]}}">
  <!--<scroll-view scroll-y="true"   scroll-with-animation="true" style="width: 100%" class="" >-->
- <view id="listWrapper1">
+ <scroll-view scroll-y="true"   scroll-with-animation="true" id="listWrapper1" class="list-wrapper-1">
   <block wx:for="{{events1}}" wx:key="unique">
      <navigator url="../publicDetail/publicDetail?eventId={{item.eventId}}">
     <view class="events-list-container events-list-container1">
@@ -31,7 +31,7 @@
      </navigator>
   </block>
 
-</view>
+</scroll-view>
 
 <!--</scroll-view> -->
 </view>
