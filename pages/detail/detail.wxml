@@ -248,7 +248,13 @@
            <!--</navigator>-->
             </view>
         </view>
-         <view class="foot-item comment2 comment3" bindtap="clickEnrollBtn" hidden="{{isShowEnroll}}"> 
+ 
+   
+        <view class="foot-item comment2" bindtap="scrollToComment">
+          <text class="comment_num">{{des.commentData.data.totalCount}}</text>
+          <image src="../../images/c_icon1.png"></image>
+        </view>
+        <view class="foot-item comment2 comment3" bindtap="clickEnrollBtn" hidden="{{isShowEnroll}}"> 
    <block wx:if="{{hasEnrolled}}">
      	<image src="../../images/icon6.png"></image>
      </block>
@@ -257,11 +263,6 @@
      </block>
    
    </view>
-   
-        <view class="foot-item comment2" bindtap="scrollToComment">
-          <text class="comment_num">{{des.commentData.data.totalCount}}</text>
-          <image src="../../images/c_icon1.png"></image>
-        </view>
         <view class="foot-item comment2 comment3" bindtap="clickFollowEventBtn"> 
         <block wx:if="{{isFollow}}">
        	 	<image src="../../images/c_icon2_after.png"></image>

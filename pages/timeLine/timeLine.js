@@ -293,6 +293,7 @@ Page({
   },
 
   onBindScroll: function (e) {
+  	console.log("滚动了",this.data.isShowSimpleCal,e);
     if (e.detail.scrollTop < this.data.toggleCalBundary) {
       this.setData({
         isShowSimpleCal: 'none'
@@ -302,6 +303,7 @@ Page({
         isShowSimpleCal: 'block'
       });
     }
+    
   },
 
   onHitTop: function () {
@@ -327,6 +329,7 @@ Page({
 
   // 点击日历修改日期
   onSelectDate: function (e) {
+  	console.log('执行了点击事件',e);
     var date = e.target.dataset.date;
     if (!util.inArray(date, this.data.eventDays)) {
       wx.showToast({

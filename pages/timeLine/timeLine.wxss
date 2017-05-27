@@ -391,7 +391,10 @@ text-align: center;position: relative}
 .btns view .active{border-bottom: 4rpx solid #cc2829;color:#cc2829}
 .btns .lin::after{content: "";height: 30rpx;width: 3rpx;background:#dbdbdb;position: absolute;top: 28rpx;right: 0;display: block }
 .contain{flex:1;
-overflow: auto;}
+display: flex;
+  flex-direction: column;/*column;/*row*/
+  height: 100%;
+}
 .contain1{margin-bottom: 100rpx;}
 .events-list-container1{flex-direction: column;padding: 40rpx 20rpx;min-height: auto;box-sizing: border-box}
 .events-add{display: flex;flex-direction: row;}
