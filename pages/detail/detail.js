@@ -17,6 +17,7 @@ Page({
 	    duration: 500,
    		offset: 1,
 		eventId: "",
+		
 		des:{
 			isShowBottom:true,
 			description:'',
@@ -40,7 +41,7 @@ Page({
 		address: "",
 		poster: '',
 		formatedMonth: '',
-    eventType: "",//事件类型
+		eventType: "",//事件类型
 		startTime: { //开始时间
 			year: "", //年份
 			month: "",
@@ -73,7 +74,7 @@ Page({
 	},
 
 	onLoad: function(options){
-   
+		
 		this.setData({
 			eventId:options.eventId,
 			'des.eventId':options.eventId,
@@ -85,7 +86,7 @@ Page({
 	      title: '数据加载中'
 	    });
 	    user.login(this.onLoadData, this, true);
-      console.log(this.data.hasEnrolled)
+	    
 	},
 	//页面加载的函数
 	onLoadData: function() {
@@ -100,25 +101,25 @@ Page({
 	      data: getEventBaseParams,
 	      method: 'POST',
 	      realSuccess: function(data){
-	      //		console.log("base",data);
+	      		console.log("base",data);
 	        	var datas=data;
 				var en = parseInt(datas.startTime.substring(5, 7));
-        if (datas.eventType == "双选会") {
-          var module = {};
-          module.moduleId = this.data.eventId;
-          module.moduleType = "7";
-        datas.modules.push(module);
-        }
+				 if (datas.eventType == "双选会") {
+				          var module = {};
+				          module.moduleId = this.data.eventId;
+				          module.moduleType = "7";
+				        datas.modules.push(module);
+			        }
 				// edit by 梁冬
 				// 依照ui图重新排列模块的渲染顺序
 				var modules = that.sortModulesByPriority(data.modules);
-       
+
 				that.setData({
 						"modules": modules,
 						"eventName": datas.name,
 						"address": datas.address,
 						"poster": datas.poster,
-            "eventType": datas.eventType,
+						"eventType": datas.eventType,
 						"formatedMonth": monthFormatList[en-1].arabic + '月',
 						"startTime": { //开始时间
 							"year": datas.startTime.substring(0, 4), //年份
@@ -140,12 +141,11 @@ Page({
 						"latitude":datas.latitude,
 						"longitude":datas.longitude
 				});
-       console.log(datas)
 				that.getEnrollModuleData();
-      
 				that.getCommentData();
 	        	wx.hideLoading();
 	      },
+		  loginCallback: this.onLoadData,
 	      realFail: function(msg) {
 	        wx.hideLoading();
 	        wx.showToast({
@@ -155,7 +155,7 @@ Page({
 	    }, true);
     
 	},
-  
+
 	//获取报名模块数据
 	getEnrollModuleData:function(){
 		let that = this;
@@ -173,11 +173,11 @@ Page({
 					data: getEnrollModuleParams,
 					method: 'POST',
 					realSuccess: function(res) {
-					
-					that.setData({
-              				hasEnrolled: res.data.hasEnrolled,
-              				'des.hasEnrolled': res.data.hasEnrolled,
-							enrollModuleId: that.data.modules[i].moduleId //把moduleId保存，报名的时候用到
+						console.log("bm",res);
+						that.setData({
+							"hasEnrolled":res.data.hasEnrolled,
+							'des.hasEnrolled': res.data.hasEnrolled,
+							"enrollModuleId": that.data.modules[i].moduleId //把moduleId保存，报名的时候用到
 						});
 					},
 					realFail: function(msg) {
@@ -217,7 +217,7 @@ Page({
 			          	if(res.data.errCode=='0000'){
 				          	that.setData({
 				          		"isAllow": !that.data.isAllow,
-								"hasEnrolled":!that.data.hasEnrolled
+								"hasEnrolled": !that.data.hasEnrolled
 							});
 			          	}
 					},
@@ -429,8 +429,12 @@ Page({
 	},
 	onShareAppMessage: function() {
 		// 用户点击右上角分享
-		var path =  '/pages/detail/detail';
-	 
+		var path = '';
+		if (this.data.poster) {
+			path = '/pages/eventPoster/eventPoster';
+		} else {
+			path = '/pages/detail/detail';
+		}
 		return {
 			title: '北京大学-' + this.data.eventName, // 分享描述
 			path: path + '?eventId='+this.data.eventId+'&eventName='+this.data.eventName+'&fromShare=1' // 分享路径
@@ -448,15 +452,15 @@ Page({
 
 	// 重新排序modules
 	sortModulesByPriority: function(modules) {
-		// 模块Id, moduleType 1:详情事件，2:评论，3：报名，4：投票，5:问卷，6：评价, 7:双选单位详情
+		// 详情1，投票4，问卷5，评价6，评论2
 		var priority = {
 			"3": 0,
-      "6": 1,
+      		"6": 1,
  			"7": 2,
 			"1":3,
 			"2": 4,
-      "4": 5,
-      "5": 6,
+      		"4": 5,
+      		"5": 6
 		};
 		modules.sort(function(mA, mB) {
 			return priority[mA.moduleType] - priority[mB.moduleType];

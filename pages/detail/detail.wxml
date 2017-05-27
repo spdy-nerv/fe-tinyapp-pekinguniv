@@ -106,24 +106,6 @@
 
 </scroll-view>
 
-
-
-<!--事件评价模块 moduleType:6-->
-<template name="6">
-<view class="model">
-  <view class="model-left ">
-     <image src="../../images/d-icon5.png" class="m-img5"></image>
-  </view>
-  <view class="model-right">
-    <view class="right1">事件评价模块</view>
-   
-   </view>
-   <view class="arr">
-   <text class="wb_arrow_right"></text>
-   </view>
-</view>
-</template>
-
 <template name="1">
 <!-- 上拉查看图文详情 -->
 <view class="pull-up-show-detail mg20" bindtap="clickShowInfo" id="J_detail">
@@ -141,6 +123,7 @@
 </block>
 </view>
 </template>
+
 <!--事件投票模块 moduleType :4-->
 <template name="4">
 <navigator url="../voteModule/voteModule?moduleId={{moduleId}}">
@@ -175,6 +158,24 @@
 </view>
 </navigator>
 </template>
+
+<!--事件评价模块 moduleType:6-->
+<template name="6">
+<view class="model">
+  <view class="model-left ">
+     <image src="../../images/d-icon5.png" class="m-img5"></image>
+  </view>
+  <view class="model-right">
+    <view class="right1">事件评价模块</view>
+   
+   </view>
+   <view class="arr">
+   <text class="wb_arrow_right"></text>
+   </view>
+</view>
+</template>
+
+
 <!--评论模块 ：moduleType:2-->
 <template name="2">
 <!--评论-->
@@ -229,12 +230,13 @@
 	  </view>
   </block>
 </view>
+</template>
 
 <!--底部浮动评论输入框-->
 
 
 
-<view class="footer_container mg20" hidden="{{isAllowComment}}">
+<view class="footer_container mg20" hidden="{{des.isAllowComment}}">
         
 
         <view class="foot-item comment1">
@@ -246,8 +248,7 @@
            <!--</navigator>-->
             </view>
         </view>
-       
-           <view class="foot-item comment2 comment3" bindtap="clickEnrollBtn" hidden="{{isShowEnroll}}"> 
+         <view class="foot-item comment2 comment3" bindtap="clickEnrollBtn" hidden="{{isShowEnroll}}"> 
    <block wx:if="{{hasEnrolled}}">
      	<image src="../../images/icon6.png"></image>
      </block>
@@ -256,8 +257,9 @@
      </block>
    
    </view>
-    <view class="foot-item comment2" bindtap="scrollToComment">
-          <text class="comment_num">{{commentData.data.totalCount}}</text>
+   
+        <view class="foot-item comment2" bindtap="scrollToComment">
+          <text class="comment_num">{{des.commentData.data.totalCount}}</text>
           <image src="../../images/c_icon1.png"></image>
         </view>
         <view class="foot-item comment2 comment3" bindtap="clickFollowEventBtn"> 
@@ -270,7 +272,6 @@
         </view>
         
 </view>
-</template>
 <!--双选单位详情 moduleType:5-->
 <template name="7">
 <navigator url="../companyList/companyList?eventId={{eventId}}">
