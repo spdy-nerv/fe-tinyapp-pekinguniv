@@ -16,7 +16,7 @@
   <view><text  id="activity" data-id="1" class="{{section[1]?'active':''}}" bindtap="changeL">活动列表</text></view>
   </view>
 <view class="contain contain1" wx:if="{{section[0]}}">
- <scroll-view scroll-y="true"   scroll-with-animation="true" style="width: 100%" class="" >
+ <!--<scroll-view scroll-y="true"   scroll-with-animation="true" style="width: 100%" class="" >-->
  <view id="listWrapper1">
   <block wx:for="{{events1}}" wx:key="unique">
      <navigator url="../publicDetail/publicDetail?eventId={{item.eventId}}">
@@ -33,7 +33,7 @@
 
 </view>
 
-</scroll-view> 
+<!--</scroll-view> -->
 </view>
 
  <view  wx:if="{{section[1]}}"  class="contain" >
