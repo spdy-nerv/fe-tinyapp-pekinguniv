@@ -5,7 +5,8 @@ var { request } = require('../../libs/request');
 Page({
   data: {
   	footerConfig: {
-      pagePersonal: true
+      pagePersonal: true,
+      isAllowPublish:wx.getStorageSync('isAllowPublish')||'0'
     },
     nick:"",  //昵称
 	  headerImg:"",

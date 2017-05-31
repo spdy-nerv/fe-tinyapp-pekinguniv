@@ -82,6 +82,7 @@ function doAppLogin(data, cb, ctx) {
         if (d.errCode == '0000' && d.resultData) {
             var sid = d.resultData.sid;
             wx.setStorageSync('sid', sid);
+            wx.setStorageSync('isAllowPublish', d.resultData.role.isAllowPublish);
             typeof cb == "function" && cb.call(ctx);
         } else {
             wx.showToast({

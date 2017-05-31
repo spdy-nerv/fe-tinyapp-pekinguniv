@@ -37,7 +37,8 @@ page {
     margin: 0 52rpx;
     width: 571rpx;
     box-sizing: border-box;
-    line-height: 135rpx;
+    line-height: 50rpx;
+    padding:30rpx 0;
     font-size: 36rpx;
     color: #365593;
     text-align: center;

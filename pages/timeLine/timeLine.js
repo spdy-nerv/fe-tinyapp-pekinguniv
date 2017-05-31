@@ -12,7 +12,8 @@ var app = getApp();
 Page({
   data: {
     footerConfig: {
-      pageEvent: true
+      pageEvent: true,
+      isAllowPublish:wx.getStorageSync('isAllowPublish')||'0'
     },
     year: 0,
     month: 0,

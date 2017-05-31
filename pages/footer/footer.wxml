@@ -11,10 +11,16 @@
         </view>
         
         <view class="foot-item foot2">
-        <navigator url="../eventPublish/eventPublish" hover-class="none">
-         <image src="../../images/foot-event-icon2.png" />
-         <view class="font-gradient" style="margin-top:-5rpx;">发布</view>
-        </navigator>
+        <block wx:if="{{isAllowPublish == 1}}">
+	        <navigator url="../eventPublish/eventPublish" hover-class="none">
+	         <image src="../../images/foot-event-icon2.png" />
+	         <view class="font-gradient" style="margin-top:-5rpx;">发布</view>
+	        </navigator>
+        </block>
+        <block wx:elseif>
+	         <image src="../../images/foot-event-icon2ed.png" />
+	         <view  style="margin-top:-5rpx;">发布</view>
+        </block>
         </view>
         
         <view class="foot-item foot3">

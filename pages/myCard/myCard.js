@@ -6,7 +6,8 @@ var { validate } = require('../../libs/validate');
 Page({
   data: {
   	footerConfig: {
-      pagePersonal: true
+      pagePersonal: true,
+      isAllowPublish:wx.getStorageSync('isAllowPublish')||'0'
     },
     realName:"",  
 	  photo:"",   
