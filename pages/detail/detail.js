@@ -144,6 +144,7 @@ Page({
 				that.getEnrollModuleData();
 				that.getCommentData();
 	        	wx.hideLoading();
+	        	that.clickShowInfo();
 	      },
 		  loginCallback: this.onLoadData,
 	      realFail: function(msg) {

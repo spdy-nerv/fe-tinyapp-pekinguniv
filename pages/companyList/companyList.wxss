@@ -19,25 +19,24 @@
   border-top: solid 1rpx #e5e6e8;
   background: #ffffff;
   color: #2d2e33;
-   font-size: 32rpx;
+   font-size: 34rpx;
    padding:10rpx 0 10rpx 18rpx;
 }
 .model-right{
   line-height: 50rpx;
   color:#5d5f6a;
-  width: 70%;
+  width: 76%;
 }
 .model-right .right1{
-  font-size: 36rpx;
+  font-size: 34rpx;
   color: #000000;
 }
 .arr button{
-	padding:2rpx 15rpx;
+	padding:4rpx 20rpx;
 	color:#ffffff;
-	font-size:26rpx;
+	font-size:34rpx;
 	text-align:center;
 	background:red;
-	height:50rpx;
 	line-height:50rpx;
 }
 .arr{
