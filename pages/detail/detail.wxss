@@ -168,7 +168,6 @@ swiper {
  .model-left .m-img7{
   width: 40rpx;
   height: 38rpx;
-  margin-left:4rpx;
 }
 .arr{
   margin-right: 30rpx;
@@ -220,10 +219,10 @@ swiper {
 .detail_box{
   padding: 15rpx 5rpx;
   margin: 20rpx;
-  line-height:30rpx;
+  line-height:34rpx;
   background: #ffffff;
   text-align:left;
-  font-size: 30rpx;
+  font-size: 34rpx;
 }
 
 .detail_box_p {
@@ -231,7 +230,7 @@ swiper {
 }
 
 .detail_box text{
-	line-height: 1.2;
+	line-height: 1.4;
 }
 
 .detail_box_p image {

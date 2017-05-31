@@ -32,7 +32,7 @@
   color: #000000;
 }
 .arr button{
-	padding:4rpx 20rpx;
+	padding:4rpx 20rpx 2rpx 20rpx;
 	color:#ffffff;
 	font-size:34rpx;
 	text-align:center;
